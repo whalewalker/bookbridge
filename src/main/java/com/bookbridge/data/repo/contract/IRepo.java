@@ -2,12 +2,14 @@ package com.bookbridge.data.repo.contract;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 
 public interface IRepo<T> {
 
     T create(T product);
 
-    Page<T> getAll(int pageNum, int pageSize);
+    List<T> getAll();
 
     T getById(long id);
 
