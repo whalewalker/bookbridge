@@ -2,6 +2,7 @@ package com.bookbridge.services.contract;
 
 import com.bookbridge.data.model.Book;
 import com.bookbridge.data.model.Patron;
+import com.bookbridge.data.request.PatronRequest;
 import com.bookbridge.data.response.Response;
 
 public interface PatronService {
@@ -9,9 +10,9 @@ public interface PatronService {
 
     Response<Patron> getById(Long id);
 
-    Response<Patron> create(Book book);
+    Response<Patron> create(PatronRequest request);
 
-    Response<Patron> update(Long id, Book book);
+    Response<Patron> update(Long id, PatronRequest request);
 
-    void delete(Long id);
+    Response<?> delete(Long id);
 }

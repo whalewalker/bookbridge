@@ -3,6 +3,7 @@ package com.bookbridge.data.repo;
 import com.bookbridge.data.model.Patron;
 import com.bookbridge.data.repo.contract.IPatronRepo;
 import com.bookbridge.data.repo.contract.RelationalBaseRepo;
+import com.bookbridge.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,4 +14,5 @@ public class PatronRepo extends RelationalBaseRepo<Patron, IPatronRepo> {
         super(iPatronRepo, "Patron");
         this.iPatronRepo = iPatronRepo;
     }
+
 }

@@ -13,4 +13,5 @@ public class BookRepo extends RelationalBaseRepo<Book, IBookRepo> {
         super(iBookRepo, "Book");
         this.iBookRepo = iBookRepo;
     }
+
 }

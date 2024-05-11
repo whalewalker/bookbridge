@@ -1,4 +1,3 @@
-// BorrowingRecordRepository.java
 package com.bookbridge.data.repo.contract;
 
 import com.bookbridge.data.model.BorrowedBook;

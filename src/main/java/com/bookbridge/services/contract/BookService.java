@@ -1,6 +1,7 @@
 package com.bookbridge.services.contract;
 
 import com.bookbridge.data.model.Book;
+import com.bookbridge.data.request.BookRequest;
 import com.bookbridge.data.response.Response;
 
 public interface BookService {
@@ -8,9 +9,9 @@ public interface BookService {
 
     Response<Book> getById(Long id);
 
-    Response<Book> create(Book book);
+    Response<Book> create(BookRequest request);
 
-    Response<Book> update(Long id, Book book);
+    Response<Book> update(Long id, BookRequest request);
 
-    void delete(Long id);
+    Response<?> delete(Long id);
 }
