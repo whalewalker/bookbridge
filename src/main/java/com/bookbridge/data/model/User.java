@@ -5,30 +5,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Patron implements BaseModel {
-
+@Table(name = "users")
+public class User implements BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
-
     @Column(unique = true, nullable = false)
     private String email;
 
-    @JsonIgnore
     @Column(nullable = false)
-    private String phoneNumber;
-
-    @OneToMany(mappedBy = "patron", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<BorrowedBook> borrowedBooks;
+    @JsonIgnore
+    private String password;
 }

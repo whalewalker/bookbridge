@@ -4,6 +4,7 @@ import com.bookbridge.data.model.BorrowedBook;
 import com.bookbridge.data.repo.contract.IBorrowedBookRepo;
 import com.bookbridge.data.repo.contract.RelationalBaseRepo;
 import com.bookbridge.exception.ResourceNotFoundException;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,7 +13,7 @@ import java.util.Optional;
 public class BorrowedBookRepo extends RelationalBaseRepo<BorrowedBook, IBorrowedBookRepo> {
     private final IBorrowedBookRepo iBorrowedBookRepo;
 
-    public BorrowedBookRepo(IBorrowedBookRepo iBorrowedBookRepo) {
+    public BorrowedBookRepo(@Lazy IBorrowedBookRepo iBorrowedBookRepo) {
         super(iBorrowedBookRepo, "Borrowed Book");
         this.iBorrowedBookRepo = iBorrowedBookRepo;
     }

@@ -2,10 +2,7 @@ package com.bookbridge.controller.v1;
 
 
 import com.bookbridge.data.model.Patron;
-import com.bookbridge.data.request.LoginRequest;
 import com.bookbridge.data.request.PatronRequest;
-import com.bookbridge.data.response.LoginResponse;
-import com.bookbridge.data.response.ResetPasswordRequest;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.services.contract.PatronService;
 import jakarta.validation.Valid;
@@ -46,21 +43,6 @@ public class PatronController {
         };
     }
 
-    @PostMapping("/login")
-    public Callable<ResponseEntity<Response<LoginResponse>>> createPatron(@Valid @RequestBody LoginRequest request) {
-        return () -> {
-            Response<LoginResponse> response = patronService.login(request);
-            return ResponseEntity.ok(response);
-        };
-    }
-
-    @PutMapping("/{patronId}/reset-password")
-    public Callable<ResponseEntity<Response<Patron>>> resetPassword(@PathVariable Long patronId, @RequestBody ResetPasswordRequest request) {
-        return () -> {
-            Response<Patron> response = patronService.resetPassword(patronId, request.password());
-            return ResponseEntity.ok(response);
-        };
-    }
 
     @PutMapping("/{id}")
     public Callable<ResponseEntity<Response<Patron>>> updatePatron(@PathVariable Long id, @RequestBody PatronRequest request) {
