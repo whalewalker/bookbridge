@@ -63,7 +63,7 @@ public class PatronServiceImpl implements PatronService {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtUtils.generateToken((UserDetails) authentication.getDetails());
+        String token = jwtUtils.generateToken((UserDetails) authentication.getPrincipal());
 
         return successfulResponse(List.of(new LoginResponse(token)));
     }
