@@ -13,6 +13,6 @@ public class PatronRequest {
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotBlank(message = "Phone number is required")
-    private String phoneNumber;
+    @NotBlank(message = "Password is required")
+    private String password;
 }

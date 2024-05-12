@@ -10,4 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface IPatronRepo extends JpaRepository<Patron, Long> {
+    Optional<Patron> findByEmail(String email);
 }

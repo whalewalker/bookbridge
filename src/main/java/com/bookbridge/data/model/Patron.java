@@ -2,6 +2,7 @@
 package com.bookbridge.data.model;
 
 import com.bookbridge.data.repo.contract.BaseModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,9 +20,15 @@ public class Patron implements BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(unique = true, nullable = false)
     private String email;
-    private String phone;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private String password;
 
     @OneToMany(mappedBy = "patron", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<BorrowedBook> borrowedBooks;
