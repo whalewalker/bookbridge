@@ -1,5 +1,7 @@
 package com.bookbridge.config;
 
+import com.bookbridge.security.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -9,7 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RequiredArgsConstructor
 public class AppConfig {
+    private final UserDetailsServiceImpl userDetailsService;
     @Bean
     public ModelMapper mapper() {
         ModelMapper mapper = new ModelMapper();
@@ -31,4 +35,5 @@ public class AppConfig {
 
         return mapper;
     }
+
 }
