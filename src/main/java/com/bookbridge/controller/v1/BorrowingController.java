@@ -3,7 +3,6 @@ package com.bookbridge.controller.v1;
 import com.bookbridge.data.model.BorrowedBook;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.services.contract.BorrowingService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
