@@ -24,7 +24,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info(username);
         com.bookbridge.data.model.User user = userRepo.getByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 

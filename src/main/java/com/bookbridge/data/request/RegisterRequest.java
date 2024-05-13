@@ -1,4 +1,12 @@
 package com.bookbridge.data.request;
 
-public record RegisterRequest(String email, String password) {
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Request object for user registration")
+public record RegisterRequest(
+        @Schema(description = "Email address of the user", example = "user@example.com")
+        String email,
+        @Schema(description = "Password of the user", example = "password123")
+        String password) {
 }

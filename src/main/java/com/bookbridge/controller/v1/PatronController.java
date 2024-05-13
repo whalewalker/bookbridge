@@ -5,6 +5,10 @@ import com.bookbridge.data.model.Patron;
 import com.bookbridge.data.request.PatronRequest;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.services.contract.PatronService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +19,15 @@ import java.util.concurrent.Callable;
 @RestController
 @RequestMapping("/api/patrons")
 @RequiredArgsConstructor
+@Tag(name = "Patrons", description = "Operations related to patron management")
 public class PatronController {
 
     private final PatronService patronService;
 
     @GetMapping
+    @Operation(summary = "Get all patrons", responses = {
+            @ApiResponse(responseCode = "200", description = "Patrons retrieved successfully")
+    })
     public Callable<ResponseEntity<Response<Patron>>> getAllPatrons() {
         return () -> {
             Response<Patron> response = patronService.getAll();
@@ -28,7 +36,11 @@ public class PatronController {
     }
 
     @GetMapping("/{id}")
-    public Callable<ResponseEntity<Response<Patron>>> getPatronById(@PathVariable Long id) {
+    @Operation(summary = "Get a patron by ID", responses = {
+            @ApiResponse(responseCode = "200", description = "Patron retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Patron not found")
+    })
+    public Callable<ResponseEntity<Response<Patron>>> getPatronById(@Parameter(description = "Patron ID") @PathVariable Long id) {
         return () -> {
             Response<Patron> response = patronService.getById(id);
             return ResponseEntity.ok(response);
@@ -36,16 +48,22 @@ public class PatronController {
     }
 
     @PostMapping
-    public Callable<ResponseEntity<Response<Patron>>> createPatron(@Valid @RequestBody PatronRequest request) {
+    @Operation(summary = "Create a new patron", responses = {
+            @ApiResponse(responseCode = "200", description = "Patron created successfully")
+    })
+    public Callable<ResponseEntity<Response<Patron>>> createPatron(@Parameter(description = "Patron request") @Valid @RequestBody PatronRequest request) {
         return () -> {
             Response<Patron> response = patronService.create(request);
             return ResponseEntity.ok(response);
         };
     }
 
-
     @PutMapping("/{id}")
-    public Callable<ResponseEntity<Response<Patron>>> updatePatron(@PathVariable Long id, @RequestBody PatronRequest request) {
+    @Operation(summary = "Update a patron", responses = {
+            @ApiResponse(responseCode = "200", description = "Patron updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Patron not found")
+    })
+    public Callable<ResponseEntity<Response<Patron>>> updatePatron(@Parameter(description = "Patron ID") @PathVariable Long id, @Parameter(description = "Patron request") @RequestBody PatronRequest request) {
         return () -> {
             Response<Patron> response = patronService.update(id, request);
             return ResponseEntity.ok(response);
@@ -53,11 +71,14 @@ public class PatronController {
     }
 
     @DeleteMapping("/{id}")
-    public Callable<ResponseEntity<Response<?>>> deletePatron(@PathVariable Long id) {
+    @Operation(summary = "Delete a patron", responses = {
+            @ApiResponse(responseCode = "200", description = "Patron deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Patron not found")
+    })
+    public Callable<ResponseEntity<Response<?>>> deletePatron(@Parameter(description = "Patron ID") @PathVariable Long id) {
         return () -> {
             Response<?> response = patronService.delete(id);
             return ResponseEntity.ok(response);
         };
-
     }
 }
