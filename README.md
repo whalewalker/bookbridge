@@ -1,6 +1,7 @@
 # Library Management System
 
 This project is a Library Management System API built using Spring Boot. It provides RESTful endpoints for managing books, patrons, and borrowing records.
+[Swagger doc](https://bookbridge.onrender.com/swagger-ui/index.html)
 
 ## Technologies
 
@@ -52,7 +53,7 @@ The application will start on `http://localhost:8080`.
 
 ## API Documentation
 
-The API documentation is available at `http://localhost:8080/swagger-ui.html` when the application is running. You can explore and test the available endpoints using the interactive Swagger UI.
+The API documentation is available at `http://localhost:8080/swagger-ui/index.html` when the application is running. You can explore and test the available endpoints using the interactive Swagger UI.
 
 ## API Endpoints
 
