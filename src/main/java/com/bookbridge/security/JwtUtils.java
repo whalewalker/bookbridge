@@ -3,6 +3,7 @@ package com.bookbridge.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +16,13 @@ import java.util.function.Function;
 @Component
 public class JwtUtils {
 
-    private static final String SECRET_KEY = "your-secret-key knedkjwbnljksbnjkavknvdsakjnvsdkjnsadvjknjkasvdnjkavs";
-    private static final int TOKEN_VALIDITY = 3600 * 5; // 5 hours
-    private static final Key KEY = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private final int tokenExpiration;
+    private final Key key;
+
+    public JwtUtils(@Value("${jwt.secret.key}") String secretKey, @Value("${jwt.token.expiration}") int tokenExpiration) {
+        this.tokenExpiration = tokenExpiration;
+        key = Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -30,7 +35,7 @@ public class JwtUtils {
 
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(KEY.getEncoded())
+                .setSigningKey(key.getEncoded())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -56,8 +61,8 @@ public class JwtUtils {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY * 1000))
-                .signWith(KEY)
+                .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration * 1000L))
+                .signWith(key)
                 .compact();
     }
 
