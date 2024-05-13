@@ -6,7 +6,6 @@ import com.bookbridge.data.request.ResetPasswordRequest;
 import com.bookbridge.data.response.LoginResponse;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.security.JwtUtils;
-import com.bookbridge.security.UserDetailsServiceImpl;
 import com.bookbridge.services.contract.AuthService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,9 +38,6 @@ class AuthControllerTest {
 
     @MockBean
     private AuthService authService;
-
-    @MockBean
-    private UserDetailsServiceImpl userDetailsService;
 
     @MockBean
     private JwtUtils jwtUtils;

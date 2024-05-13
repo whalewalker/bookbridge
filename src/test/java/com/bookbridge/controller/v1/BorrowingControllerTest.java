@@ -3,7 +3,6 @@ package com.bookbridge.controller.v1;
 import com.bookbridge.data.model.BorrowedBook;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.security.JwtUtils;
-import com.bookbridge.security.UserDetailsServiceImpl;
 import com.bookbridge.services.contract.BorrowingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,9 +32,6 @@ class BorrowingControllerTest {
 
     @MockBean
     private BorrowingService borrowingService;
-
-    @MockBean
-    private UserDetailsServiceImpl userDetailsService;
 
     @MockBean
     private JwtUtils jwtUtils;

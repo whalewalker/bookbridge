@@ -4,7 +4,6 @@ import com.bookbridge.data.model.Book;
 import com.bookbridge.data.request.BookRequest;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.security.JwtUtils;
-import com.bookbridge.security.UserDetailsServiceImpl;
 import com.bookbridge.services.contract.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,9 +40,6 @@ class BookControllerTest {
 
     @MockBean
     private BookService bookService;
-
-    @MockBean
-    private UserDetailsServiceImpl userDetailsService;
 
     @MockBean
     private JwtUtils jwtUtils;

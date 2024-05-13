@@ -4,7 +4,6 @@ import com.bookbridge.data.model.Patron;
 import com.bookbridge.data.request.PatronRequest;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.security.JwtUtils;
-import com.bookbridge.security.UserDetailsServiceImpl;
 import com.bookbridge.services.contract.PatronService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,9 +40,6 @@ class PatronControllerTest {
 
     @MockBean
     private PatronService patronService;
-
-    @MockBean
-    private UserDetailsServiceImpl userDetailsService;
 
     @MockBean
     private JwtUtils jwtUtils;

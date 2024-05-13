@@ -36,6 +36,7 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.io.IOException;
+import java.security.SignatureException;
 import java.util.List;
 
 import static com.bookbridge.util.Util.logError;
@@ -94,6 +95,12 @@ public class CustomControllerAdvice {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<Response<?>> handleException(Exception e) {
         return commonResponseForSystemError("Error occurred, please contact the administrator", e);
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Response<?>> handleJwtSignatureException(Exception e) {
+        return commonResponseForSystemError("An error occurred during authentication, please login again", e);
     }
 
     @ExceptionHandler(AccessDeniedException.class)

@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.Callable;
-
 @RestController
 @RequestMapping("/api/patrons")
 @RequiredArgsConstructor
@@ -28,11 +26,9 @@ public class PatronController {
     @Operation(summary = "Get all patrons", responses = {
             @ApiResponse(responseCode = "200", description = "Patrons retrieved successfully")
     })
-    public Callable<ResponseEntity<Response<Patron>>> getAllPatrons() {
-        return () -> {
-            Response<Patron> response = patronService.getAll();
-            return ResponseEntity.ok(response);
-        };
+    public ResponseEntity<Response<Patron>> getAllPatrons() {
+        Response<Patron> response = patronService.getAll();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
@@ -40,22 +36,18 @@ public class PatronController {
             @ApiResponse(responseCode = "200", description = "Patron retrieved successfully"),
             @ApiResponse(responseCode = "404", description = "Patron not found")
     })
-    public Callable<ResponseEntity<Response<Patron>>> getPatronById(@Parameter(description = "Patron ID") @PathVariable Long id) {
-        return () -> {
-            Response<Patron> response = patronService.getById(id);
-            return ResponseEntity.ok(response);
-        };
+    public ResponseEntity<Response<Patron>> getPatronById(@Parameter(description = "Patron ID") @PathVariable Long id) {
+        Response<Patron> response = patronService.getById(id);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
     @Operation(summary = "Create a new patron", responses = {
             @ApiResponse(responseCode = "200", description = "Patron created successfully")
     })
-    public Callable<ResponseEntity<Response<Patron>>> createPatron(@Parameter(description = "Patron request") @Valid @RequestBody PatronRequest request) {
-        return () -> {
-            Response<Patron> response = patronService.create(request);
-            return ResponseEntity.ok(response);
-        };
+    public ResponseEntity<Response<Patron>> createPatron(@Parameter(description = "Patron request") @Valid @RequestBody PatronRequest request) {
+        Response<Patron> response = patronService.create(request);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
@@ -63,11 +55,9 @@ public class PatronController {
             @ApiResponse(responseCode = "200", description = "Patron updated successfully"),
             @ApiResponse(responseCode = "404", description = "Patron not found")
     })
-    public Callable<ResponseEntity<Response<Patron>>> updatePatron(@Parameter(description = "Patron ID") @PathVariable Long id, @Parameter(description = "Patron request") @RequestBody PatronRequest request) {
-        return () -> {
-            Response<Patron> response = patronService.update(id, request);
-            return ResponseEntity.ok(response);
-        };
+    public ResponseEntity<Response<Patron>> updatePatron(@Parameter(description = "Patron ID") @PathVariable Long id, @Parameter(description = "Patron request") @RequestBody PatronRequest request) {
+        Response<Patron> response = patronService.update(id, request);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
@@ -75,10 +65,10 @@ public class PatronController {
             @ApiResponse(responseCode = "200", description = "Patron deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Patron not found")
     })
-    public Callable<ResponseEntity<Response<?>>> deletePatron(@Parameter(description = "Patron ID") @PathVariable Long id) {
-        return () -> {
-            Response<?> response = patronService.delete(id);
-            return ResponseEntity.ok(response);
-        };
+    public ResponseEntity<Response<?>> deletePatron(@Parameter(description = "Patron ID") @PathVariable Long id) {
+
+        Response<?> response = patronService.delete(id);
+        return ResponseEntity.ok(response);
+
     }
 }
