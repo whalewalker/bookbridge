@@ -3,7 +3,7 @@ package com.bookbridge.controller.v1;
 import com.bookbridge.data.request.LoginRequest;
 import com.bookbridge.data.request.RegisterRequest;
 import com.bookbridge.data.response.LoginResponse;
-import com.bookbridge.data.response.ResetPasswordRequest;
+import com.bookbridge.data.request.ResetPasswordRequest;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.services.contract.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,13 +46,13 @@ public class AuthController {
         };
     }
 
-    @PutMapping("/{userId}/reset-password")
+    @PutMapping("/reset-password")
     @Operation(summary = "Reset user password", responses = {
             @ApiResponse(responseCode = "200", description = "Password reset successful")
     })
-    public Callable<ResponseEntity<Response<?>>> resetPassword(@Parameter(description = "User ID") @PathVariable Long userId, @Parameter(description = "New password request") @RequestBody ResetPasswordRequest request) {
+    public Callable<ResponseEntity<Response<?>>> resetPassword(@Parameter(description = "New password request") @RequestBody ResetPasswordRequest request) {
         return () -> {
-            Response<?> response = authService.resetPassword(userId, request.password());
+            Response<?> response = authService.resetPassword( request);
             return ResponseEntity.ok(response);
         };
     }

@@ -4,6 +4,7 @@ import com.bookbridge.data.model.User;
 import com.bookbridge.data.repo.UserRepo;
 import com.bookbridge.data.request.LoginRequest;
 import com.bookbridge.data.request.RegisterRequest;
+import com.bookbridge.data.request.ResetPasswordRequest;
 import com.bookbridge.data.response.LoginResponse;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.security.JwtUtils;
@@ -76,12 +77,12 @@ class AuthServiceImplTest {
 
     @Test
     void testResetPassword() {
-        String newPassword = "newPassword";
+        ResetPasswordRequest request = new ResetPasswordRequest("user@email.com", "newPassword");
         User user = new User();
         when(userRepo.getById(1L)).thenReturn(user);
-        when(passwordEncoder.encode(newPassword)).thenReturn("encodedNewPassword");
+        when(passwordEncoder.encode(request.password())).thenReturn("encodedNewPassword");
 
-        Response<?> response = authService.resetPassword(1L, newPassword);
+        Response<?> response = authService.resetPassword(request);
         assertNotNull(response);
 
         verify(userRepo, times(1)).update(user);
@@ -90,8 +91,8 @@ class AuthServiceImplTest {
     @Test
     void testResetPasswordWhenUserNotFound() {
         when(userRepo.getById(1L)).thenReturn(null);
-
-        Response<?> response = authService.resetPassword(1L, "newPassword");
+        ResetPasswordRequest request = new ResetPasswordRequest("user@email.com", "newPassword");
+        Response<?> response = authService.resetPassword(request);
         assertNotNull(response);
 
         verify(userRepo, never()).update(any(User.class));

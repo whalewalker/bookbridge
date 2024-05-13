@@ -5,7 +5,9 @@ import com.bookbridge.data.repo.UserRepo;
 import com.bookbridge.data.request.LoginRequest;
 import com.bookbridge.data.request.RegisterRequest;
 import com.bookbridge.data.response.LoginResponse;
+import com.bookbridge.data.request.ResetPasswordRequest;
 import com.bookbridge.data.response.Response;
+import com.bookbridge.exception.ResourceNotFoundException;
 import com.bookbridge.security.JwtUtils;
 import com.bookbridge.services.contract.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -50,9 +52,10 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Response<?> resetPassword(Long patronId, String password) {
-        User user = userRepo.getById(patronId);
-        user.setPassword(passwordEncoder.encode(password));
+    public Response<?> resetPassword(ResetPasswordRequest request) {
+        User user = userRepo.getByEmail(request.email())
+                .orElseThrow(()-> new ResourceNotFoundException("User not found with email: " + request.email()));
+        user.setPassword(passwordEncoder.encode(request.password()));
         userRepo.update(user);
         return successfulResponse(null);
     }

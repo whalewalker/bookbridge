@@ -2,8 +2,8 @@ package com.bookbridge.controller.v1;
 
 import com.bookbridge.data.request.LoginRequest;
 import com.bookbridge.data.request.RegisterRequest;
+import com.bookbridge.data.request.ResetPasswordRequest;
 import com.bookbridge.data.response.LoginResponse;
-import com.bookbridge.data.response.ResetPasswordRequest;
 import com.bookbridge.data.response.Response;
 import com.bookbridge.security.JwtUtils;
 import com.bookbridge.security.UserDetailsServiceImpl;
@@ -23,7 +23,6 @@ import java.util.List;
 
 import static com.bookbridge.util.Util.successfulResponse;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -81,8 +80,8 @@ class AuthControllerTest {
 
     @Test
     void testResetPassword() throws Exception {
-        ResetPasswordRequest request = new ResetPasswordRequest("newPassword");
-        when(authService.resetPassword(eq(1L), any(String.class))).thenReturn(any(Response.class));
+        ResetPasswordRequest request = new ResetPasswordRequest("user@email.com", "newPassword");
+        when(authService.resetPassword(any(ResetPasswordRequest.class))).thenReturn(any(Response.class));
 
         mockMvc.perform(put("/api/auth/1/reset-password")
                         .contentType(MediaType.APPLICATION_JSON)
