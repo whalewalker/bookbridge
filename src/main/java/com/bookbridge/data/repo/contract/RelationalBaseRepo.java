@@ -2,6 +2,7 @@ package com.bookbridge.data.repo.contract;
 
 
 import com.bookbridge.exception.ResourceNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,11 +20,13 @@ public abstract class RelationalBaseRepo<T extends BaseModel, R extends JpaRepos
     }
 
     @CacheEvict(cacheNames = "#root.target.getClass().getSimpleName()", key = "#result.id", allEntries = true)
+    @Transactional
     public T create(T t) {
         return r.save(t);
     }
 
     @CacheEvict(cacheNames = "#root.target.getClass().getSimpleName()", key = "#result.id", allEntries = true)
+    @Transactional
     public T update(T t) {
         if (findById(r, t.getId()) == null)
             throw new ResourceNotFoundException(name + " not found");
@@ -42,6 +45,7 @@ public abstract class RelationalBaseRepo<T extends BaseModel, R extends JpaRepos
     }
 
     @CacheEvict(cacheNames = "#root.target.getClass().getSimpleName()", key = "#id", allEntries = true)
+    @Transactional
     public void delete(long id) {
         T entity = findById(r, id);
         r.delete(entity);
