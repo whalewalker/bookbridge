@@ -8,6 +8,8 @@ import com.bookbridge.data.repo.BookRepo;
 import com.bookbridge.data.repo.BorrowedBookRepo;
 import com.bookbridge.data.repo.PatronRepo;
 import com.bookbridge.data.response.Response;
+import com.bookbridge.exception.RequestIsBadException;
+import com.bookbridge.exception.ResourceNotFoundException;
 import com.bookbridge.services.contract.BorrowingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,10 @@ public class BorrowingServiceImpl implements BorrowingService {
     private final BorrowedBookRepo borrowedBookRepo;
 
     public Response<BorrowedBook> borrowBook(Long bookId, Long patronId) {
+        BorrowedBook existingBorrowedBook = borrowedBookRepo.getBorrowedBook(bookId, patronId);
+        if (existingBorrowedBook != null) {
+            throw new RequestIsBadException("Borrowed book record already exist");
+        }
         Book book = bookRepo.getById(bookId);
         Patron patron = patronRepo.getById(patronId);
 
@@ -41,6 +47,10 @@ public class BorrowingServiceImpl implements BorrowingService {
 
     public Response<BorrowedBook> returnBook(Long bookId, Long patronId) {
         BorrowedBook borrowedBook = borrowedBookRepo.getBorrowedBook(bookId, patronId);
+
+        if (borrowedBook == null) {
+            throw new ResourceNotFoundException("No active borrowing record found for the given book and patron");
+        }
 
         borrowedBook.setReturnedDate(LocalDate.now());
         return successfulResponse(List.of(borrowedBookRepo.update(borrowedBook)));

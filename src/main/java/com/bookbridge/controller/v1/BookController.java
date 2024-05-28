@@ -25,17 +25,16 @@ public class BookController {
     @Operation(summary = "Get all books", responses = {
             @ApiResponse(responseCode = "200", description = "Books retrieved successfully")
     })
-    public ResponseEntity<?> getAllBooks() {
+    public ResponseEntity<Response<Book>> getAllBooks() {
             Response<Book> response = bookService.getAll();
             return ResponseEntity.ok(response);
-
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a book by ID", responses = {
             @ApiResponse(responseCode = "200", description = "Book retrieved successfully")
     })
-    public ResponseEntity<?> getBookById(@Parameter(description = "Book ID") @PathVariable Long id) {
+    public ResponseEntity<Response<Book>> getBookById(@Parameter(description = "Book ID") @PathVariable Long id) {
             Response<Book> response = bookService.getById(id);
             return ResponseEntity.ok(response);
     }
@@ -44,7 +43,7 @@ public class BookController {
     @Operation(summary = "Create a new book", responses = {
             @ApiResponse(responseCode = "200", description = "Book created successfully")
     })
-    public ResponseEntity<?> createBook(@Parameter(description = "Book request") @Valid @RequestBody BookRequest book) {
+    public ResponseEntity<Response<Book>> createBook(@Parameter(description = "Book request") @Valid @RequestBody BookRequest book) {
             Response<Book> response = bookService.create(book);
             return ResponseEntity.ok(response);
     }
@@ -53,7 +52,7 @@ public class BookController {
     @Operation(summary = "Update a book", responses = {
             @ApiResponse(responseCode = "200", description = "Book updated successfully")
     })
-    public ResponseEntity<?> updateBook(@Parameter(description = "Book ID") @PathVariable Long id, @Parameter(description = "Book request") @RequestBody BookRequest request) {
+    public ResponseEntity<Response<Book>> updateBook(@Parameter(description = "Book ID") @PathVariable Long id, @Parameter(description = "Book request") @RequestBody BookRequest request) {
             Response<Book> response = bookService.update(id, request);
             return ResponseEntity.ok(response);
     }
@@ -62,7 +61,7 @@ public class BookController {
     @Operation(summary = "Delete a book", responses = {
             @ApiResponse(responseCode = "200", description = "Book deleted successfully")
     })
-    public ResponseEntity<?> deleteBook(@Parameter(description = "Book ID") @PathVariable Long id) {
+    public ResponseEntity<Response<?>> deleteBook(@Parameter(description = "Book ID") @PathVariable Long id) {
             Response<?> response = bookService.delete(id);
             return ResponseEntity.ok(response);
     }

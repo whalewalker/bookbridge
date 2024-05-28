@@ -2,7 +2,6 @@ package com.bookbridge.security;
 
 import com.bookbridge.util.Util;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +31,13 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain) throws IOException, ServletException {
+            @NonNull FilterChain filterChain) throws IOException {
         try {
             String email = null;
             String jwtToken = getJwtTokenFromRequest(request);
             if (jwtToken != null) {
                 email = jwtUtils.extractUsername(jwtToken);
+
             }
 
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {

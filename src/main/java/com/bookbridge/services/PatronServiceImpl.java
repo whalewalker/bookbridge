@@ -4,6 +4,7 @@ import com.bookbridge.data.model.Patron;
 import com.bookbridge.data.repo.PatronRepo;
 import com.bookbridge.data.request.PatronRequest;
 import com.bookbridge.data.response.Response;
+import com.bookbridge.exception.RequestIsBadException;
 import com.bookbridge.services.contract.PatronService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -34,6 +35,8 @@ public class PatronServiceImpl implements PatronService {
 
     @Override
     public Response<Patron> create(PatronRequest request) {
+        Patron existingPatron = patronRepo.getByEmail(request.getEmail());
+        if (existingPatron != null) throw new RequestIsBadException("Patron already exists with email " + request.getEmail());
         Patron patron = mapper.map(request, Patron.class);
         return successfulResponse(List.of(patronRepo.create(patron)));
     }

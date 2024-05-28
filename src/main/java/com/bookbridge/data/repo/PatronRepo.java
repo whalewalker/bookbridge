@@ -14,4 +14,8 @@ public class PatronRepo extends RelationalBaseRepo<Patron, IPatronRepo> {
         super(iPatronRepo, "Patron");
         this.iPatronRepo = iPatronRepo;
     }
+
+    public Patron getByEmail(String email) {
+        return iPatronRepo.findByEmail(email).orElse(null);
+    }
 }

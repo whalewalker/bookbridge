@@ -15,4 +15,7 @@ public class BookRepo extends RelationalBaseRepo<Book, IBookRepo> {
         this.iBookRepo = iBookRepo;
     }
 
+    public Book getByISBN(String isbn) {
+       return iBookRepo.findByIsbn(isbn).orElse(null);
+    }
 }

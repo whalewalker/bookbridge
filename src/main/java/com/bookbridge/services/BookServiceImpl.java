@@ -4,6 +4,7 @@ import com.bookbridge.data.model.Book;
 import com.bookbridge.data.repo.BookRepo;
 import com.bookbridge.data.request.BookRequest;
 import com.bookbridge.data.response.Response;
+import com.bookbridge.exception.RequestIsBadException;
 import com.bookbridge.services.contract.BookService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -34,6 +35,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Response<Book> create(BookRequest request) {
+        Book existingBook = bookRepo.getByISBN(request.getIsbn());
+        if (existingBook != null) throw new RequestIsBadException("Book already exists");
         Book book = mapper.map(request, Book.class);
         return successfulResponse(List.of(bookRepo.create(book)));
     }

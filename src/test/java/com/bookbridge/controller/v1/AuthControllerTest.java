@@ -51,7 +51,7 @@ class AuthControllerTest {
     }
 
     @Test
-    void testCreatePatron() throws Exception {
+    void testCreateUser() throws Exception {
         RegisterRequest request = new RegisterRequest("test@example.com", "password");
         when(authService.create(request)).thenReturn(any(Response.class));
 

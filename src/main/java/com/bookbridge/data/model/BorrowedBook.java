@@ -2,6 +2,7 @@
 package com.bookbridge.data.model;
 
 import com.bookbridge.data.repo.contract.BaseModel;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,10 +22,12 @@ public class BorrowedBook implements BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "book_id")
+    @JsonManagedReference
     private Book book;
 
     @ManyToOne
     @JoinColumn(name = "patron_id")
+    @JsonManagedReference
     private Patron patron;
 
     private LocalDate borrowedDate;

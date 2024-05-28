@@ -107,7 +107,7 @@ public class CustomControllerAdvice {
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     public ResponseEntity<Response<?>> handleAccessDeniedException(AccessDeniedException e) {
         Response<?> response = new Response<>();
-        response.setResponseCode(ResponseCode.UNAUTHORIZED.code);
+        response.setResponseCode(ResponseCode.FORBIDDEN.code);
         response.setResponseMessage(e.getMessage());
         logError(e.getMessage(), e);
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);

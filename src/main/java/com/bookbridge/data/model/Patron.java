@@ -1,6 +1,7 @@
 package com.bookbridge.data.model;
 
 import com.bookbridge.data.repo.contract.BaseModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,5 +31,6 @@ public class Patron implements BaseModel {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "patron", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Set<BorrowedBook> borrowedBooks;
 }

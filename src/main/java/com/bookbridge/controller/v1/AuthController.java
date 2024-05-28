@@ -26,7 +26,7 @@ public class AuthController {
     @Operation(summary = "Register a new user", responses = {
             @ApiResponse(responseCode = "200", description = "User registered successfully")
     })
-    public ResponseEntity<?> createPatron(@Parameter(description = "User registration request") @Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<Response<?>> createUser(@Parameter(description = "User registration request") @Valid @RequestBody RegisterRequest request) {
         Response<?> response = authService.create(request);
         return ResponseEntity.ok(response);
 
@@ -36,7 +36,7 @@ public class AuthController {
     @Operation(summary = "Login a user", responses = {
             @ApiResponse(responseCode = "200", description = "User logged in successfully")
     })
-    public ResponseEntity<?> createPatron(@Parameter(description = "User login request") @Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<Response<LoginResponse>> login(@Parameter(description = "User login request") @Valid @RequestBody LoginRequest request) {
             Response<LoginResponse> response = authService.login(request);
             return ResponseEntity.ok(response);
 

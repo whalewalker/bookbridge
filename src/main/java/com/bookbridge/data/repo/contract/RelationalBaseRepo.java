@@ -34,7 +34,6 @@ public abstract class RelationalBaseRepo<T extends BaseModel, R extends JpaRepos
         return r.save(t);
     }
 
-    @Cacheable(cacheNames = "#root.target.getClass().getSimpleName()", key = "#id")
     public T getById(long id) {
         return findById(r, id);
     }

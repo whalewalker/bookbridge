@@ -2,6 +2,7 @@
 package com.bookbridge.data.model;
 
 import com.bookbridge.data.repo.contract.BaseModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,9 +29,10 @@ public class Book implements BaseModel {
     @Column(nullable = false)
     private Integer publicationYear;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, updatable = false)
     private String isbn;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Set<BorrowedBook> borrowingRecords;
 }
